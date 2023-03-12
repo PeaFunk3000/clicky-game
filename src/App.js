@@ -1,5 +1,5 @@
-import './App.css';
-import { useState } from 'react';
+import "./App.css";
+import { useState } from "react";
 
 const cats = [
   `${process.env.PUBLIC_URL}/images/Garfield.png`,
@@ -13,23 +13,34 @@ const cats = [
   `${process.env.PUBLIC_URL}/images/Tigger.png`,
   `${process.env.PUBLIC_URL}/images/Tom.png`,
   `${process.env.PUBLIC_URL}/images/Tommy.png`,
-  `${process.env.PUBLIC_URL}/images/Topcat.png`
+  `${process.env.PUBLIC_URL}/images/Topcat.png`,
 ];
-
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
 
 export default function App() {
 
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  const [catsGallery, setCats] = useState(cats);
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+
   return (
     <div>
-      {cats && cats.map((cat)=> (<img src={cat}/>))}
+      {catsGallery.map((cat) => (
+          <img key={Math.random()}
+            onClick={(e) => {
+              const shuffledCats = shuffle([...catsGallery]);
+              setCats(shuffledCats);
+            }}
+            src={cat}
+          />
+        ))}
     </div>
-  )
+  );
 }
-
