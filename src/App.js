@@ -26,18 +26,26 @@ export default function App() {
     return array;
   }
 
-  const [catsGallery, setCats] = useState(cats);
+  const [catsGallery, setCatsGallery] = useState(cats);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
+  const [selectedCats, setSelectedCats] = useState([]);
 
   return (
     <div>
       {catsGallery.map((cat) => (
           <img key={Math.random()}
             onClick={(e) => {
+              if (selectedCats.includes(cat)) {
+                console.log("YOU LOSE")
+                setSelectedCats([]);
+              } else {
               const shuffledCats = shuffle([...catsGallery]);
-              setCats(shuffledCats);
-            }}
+              setCatsGallery(shuffledCats);
+              const copySelectedCats = [...selectedCats, cat];
+              setSelectedCats(copySelectedCats);
+              console.log(copySelectedCats);
+            }}}
             src={cat}
           />
         ))}
